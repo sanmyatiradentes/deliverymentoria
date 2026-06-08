@@ -244,16 +244,27 @@ footer a{color:var(--amber);text-decoration:none;}
   .modos-grid{grid-template-columns:1fr 1fr}
   .chat-app{
     grid-template-columns:1fr;
+    height:calc(100dvh - 62px);
+    min-height:0;
+    border-radius:0;
+    margin-top:0;
+  }
+  .chat-app.chat-fixado{
     position:fixed;
     top:62px;
     left:0;
     right:0;
     bottom:0;
     height:auto;
-    min-height:0;
-    border-radius:0;
-    margin-top:0;
     z-index:100;
+  }
+  /* placeholder to keep page height when chat is fixed */
+  .chat-app-placeholder{
+    display:none;
+    height:calc(100dvh - 62px);
+  }
+  .chat-app-placeholder.ativo{
+    display:block;
   }
   .chat-sidebar{display:none!important}
   .chat-main{
@@ -576,7 +587,6 @@ footer a{color:var(--amber);text-decoration:none;}
             <div class="msg-avatar bot">🤖</div>
             <div class="mbubble bot">
               <p><strong>Olá! Sou o Delivery MentorIA.</strong></p>
-              <p>Fui criado por <strong>Helder Leite</strong> — engenheiro industrial, fundador do <strong>Cozinhas na Nuvem</strong>, o primeiro condomínio de dark kitchens da Região Norte do Brasil — e carrego mais de 20 anos de experiência em gestão industrial, Lean Manufacturing e empreendedorismo aplicados ao universo do delivery.</p>
               <p>Minha missão: transformar você em um operador profissional de delivery — lucrativo, escalável e independente.</p>
               <p>Selecione um modo na lateral, escolha uma sugestão ou me conte: <strong>qual é o maior desafio do seu delivery hoje?</strong></p>
             </div>
@@ -617,6 +627,7 @@ footer a{color:var(--amber);text-decoration:none;}
         </div>
       </div>
     </div>
+    <div class="chat-app-placeholder" id="chatPlaceholder"></div>
   </div>
 </section>
 
@@ -787,6 +798,38 @@ document.getElementById('user-input').addEventListener('keydown',e=>{if(e.key===
 document.getElementById('user-input').addEventListener('input',function(){this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px';});
 
 if(consentiu){setStatus('','⏳ Conectando ao assistente...');verificarGemini();}
+
+// Fix chat on screen only when scrolled into view
+(function(){
+  const chatApp = document.querySelector('.chat-app');
+  const placeholder = document.getElementById('chatPlaceholder');
+  if(!chatApp || !placeholder) return;
+
+  const isMobile = () => window.innerWidth <= 900;
+
+  const observer = new IntersectionObserver((entries) => {
+    if(!isMobile()) return;
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        chatApp.classList.add('chat-fixado');
+        placeholder.classList.add('ativo');
+      } else {
+        chatApp.classList.remove('chat-fixado');
+        placeholder.classList.remove('ativo');
+      }
+    });
+  }, { threshold: 0.01 });
+
+  observer.observe(placeholder);
+
+  // Also handle resize
+  window.addEventListener('resize', () => {
+    if(!isMobile()){
+      chatApp.classList.remove('chat-fixado');
+      placeholder.classList.remove('ativo');
+    }
+  });
+})();
 </script>
 </body>
 </html>
