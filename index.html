@@ -244,13 +244,16 @@ footer a{color:var(--amber);text-decoration:none;}
   .modos-grid{grid-template-columns:1fr 1fr}
   .chat-app{
     grid-template-columns:1fr;
-    height:calc(100dvh - 62px);
+    position:fixed;
+    top:62px;
+    left:0;
+    right:0;
+    bottom:0;
+    height:auto;
     min-height:0;
     border-radius:0;
-    margin-top:1rem;
-    position:sticky;
-    top:62px;
-    z-index:10;
+    margin-top:0;
+    z-index:100;
   }
   .chat-sidebar{display:none!important}
   .chat-main{
@@ -259,6 +262,7 @@ footer a{color:var(--amber);text-decoration:none;}
     border-radius:0;
     display:flex;
     flex-direction:column;
+    overflow:hidden;
   }
   .messages{
     flex:1;
@@ -266,9 +270,10 @@ footer a{color:var(--amber);text-decoration:none;}
     min-height:0;
     overflow-y:auto;
   }
-  .chat-mobile-bar{display:flex!important}
+  .chat-mobile-bar{display:flex!important;flex-shrink:0;}
+  .mobile-drawer{flex-shrink:0;}
   .realizacoes{grid-template-columns:1fr 1fr}
-  #ferramenta{padding:0;}
+  #ferramenta{padding:0;min-height:calc(100dvh - 62px);}
   #ferramenta .container{padding:0;max-width:100%;}
   #ferramenta .section-label,
   #ferramenta .section-title,
@@ -566,6 +571,18 @@ footer a{color:var(--amber);text-decoration:none;}
       <div class="chat-main">
         <div id="chat-status">⏳ Aguardando consentimento para conectar ao assistente...</div>
 
+                <div class="messages" id="messages">
+          <div class="msg" id="welcome-msg">
+            <div class="msg-avatar bot">🤖</div>
+            <div class="mbubble bot">
+              <p><strong>Olá! Sou o Delivery MentorIA.</strong></p>
+              <p>Fui criado por <strong>Helder Leite</strong> — engenheiro industrial, fundador do <strong>Cozinhas na Nuvem</strong>, o primeiro condomínio de dark kitchens da Região Norte do Brasil — e carrego mais de 20 anos de experiência em gestão industrial, Lean Manufacturing e empreendedorismo aplicados ao universo do delivery.</p>
+              <p>Minha missão: transformar você em um operador profissional de delivery — lucrativo, escalável e independente.</p>
+              <p>Selecione um modo na lateral, escolha uma sugestão ou me conte: <strong>qual é o maior desafio do seu delivery hoje?</strong></p>
+            </div>
+          </div>
+        </div>
+
         <!-- MOBILE BAR -->
         <div class="chat-mobile-bar">
           <button class="chat-mobile-btn active" id="btn-sugg" onclick="toggleDrawer('drawer-sugg')">💡 Sugestões</button>
@@ -588,18 +605,6 @@ footer a{color:var(--amber);text-decoration:none;}
             <button class="mobile-modo-chip" onclick="setModoMobile('lean',this)">⚙️ Lean Delivery</button>
             <button class="mobile-modo-chip" onclick="setModoMobile('marketing',this)">📣 Marketing</button>
             <button class="mobile-modo-chip" onclick="setModoMobile('darkkitchen',this)">🏭 Dark Kitchens</button>
-          </div>
-        </div>
-
-        <div class="messages" id="messages">
-          <div class="msg" id="welcome-msg">
-            <div class="msg-avatar bot">🤖</div>
-            <div class="mbubble bot">
-              <p><strong>Olá! Sou o Delivery MentorIA.</strong></p>
-              <p>Fui criado por <strong>Helder Leite</strong> — engenheiro industrial, fundador do <strong>Cozinhas na Nuvem</strong>, o primeiro condomínio de dark kitchens da Região Norte do Brasil — e carrego mais de 20 anos de experiência em gestão industrial, Lean Manufacturing e empreendedorismo aplicados ao universo do delivery.</p>
-              <p>Minha missão: transformar você em um operador profissional de delivery — lucrativo, escalável e independente.</p>
-              <p>Selecione um modo na lateral, escolha uma sugestão ou me conte: <strong>qual é o maior desafio do seu delivery hoje?</strong></p>
-            </div>
           </div>
         </div>
 
