@@ -625,23 +625,57 @@ function setStatus(cls,txt){
   el.className=cls;el.textContent=txt;
 }
 
+const modoAberturas = {
+  mentor:      'Olá! Preciso de ajuda com o meu delivery. Pode me orientar?',
+  diagnostico: 'Quero fazer um diagnóstico completo do meu delivery. Por onde começamos?',
+  plano:       'Quero montar um plano de ação para o meu delivery. Me ajuda?',
+  ifood:       'Quero melhorar minha performance no iFood. Como posso evoluir?',
+  lean:        'Quero reduzir custos e desperdícios no meu delivery. Por onde começo?',
+  marketing:   'Quero atrair mais clientes e vender mais. Qual estratégia de marketing devo usar?',
+  darkkitchen: 'Quero entender melhor o modelo de dark kitchen e como posso me beneficiar dele.'
+};
+
 function setModo(modo, btn){
   modoAtual = modo;
   document.querySelectorAll('.modo-btn-side').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  document.getElementById('ferramenta').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    const input = document.getElementById('user-input');
+    input.value = modoAberturas[modo] || '';
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+    enviar();
+  }, 600);
 }
 function setModoMobile(modo, btn){
   modoAtual = modo;
   document.querySelectorAll('.mobile-modo-chip').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   fecharDrawers();
+  document.getElementById('ferramenta').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    const input = document.getElementById('user-input');
+    input.value = modoAberturas[modo] || '';
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+    enviar();
+  }, 600);
 }
 
 function usarSugg(el){
-  document.getElementById('user-input').value = el.textContent.trim();
   fecharDrawers();
   document.getElementById('ferramenta').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    const input = document.getElementById('user-input');
+    input.value = el.textContent.trim();
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+    enviar();
+  }, 600);
 }
+
+
 
 function toggleDrawer(id){
   const gavetas=['drawer-sugg','drawer-modos'];
