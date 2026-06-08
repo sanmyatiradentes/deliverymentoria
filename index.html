@@ -168,7 +168,7 @@ section{padding:5rem 2rem;}
 .modo-btn-side:hover,.modo-btn-side.active{background:var(--orange);color:#fff;border-color:var(--orange);}
 
 .chat-main{display:flex;flex-direction:column;height:100%;overflow:hidden;border-radius:0 16px 0 0;}
-#chat-status{padding:0.5rem 1.25rem;font-size:0.77rem;background:var(--amber-light);border-bottom:1px solid rgba(255,184,0,0.2);display:flex;align-items:center;gap:0.5rem;transition:all 0.3s;}
+#chat-status{padding:0.5rem 1.25rem;font-size:0.77rem;background:var(--amber-light);border-bottom:1px solid rgba(255,184,0,0.2);display:flex;align-items:center;gap:0.5rem;transition:all 0.3s;flex-shrink:0;}
 #chat-status.ok{background:#dcfce7;border-color:rgba(20,83,45,0.15);}
 #chat-status.err{background:#fef2f2;border-color:rgba(185,28,28,0.15);}
 
@@ -198,7 +198,7 @@ section{padding:5rem 2rem;}
 .typing span:nth-child(3){animation-delay:.4s}
 @keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-6px);opacity:1}}
 
-.chat-input-area{padding:.75rem 1rem;border-top:1px solid var(--border);background:#fff;}
+.chat-input-area{padding:.75rem 1rem;border-top:1px solid var(--border);background:#fff;flex-shrink:0;}
 .chat-input-row{display:flex;gap:.5rem;align-items:flex-end;}
 #user-input{flex:1;border:1px solid var(--border);border-radius:9px;padding:.65rem .85rem;font-size:.88rem;font-family:inherit;resize:none;min-height:44px;max-height:120px;line-height:1.5;transition:border-color .15s;outline:none;background:var(--paper);}
 #user-input:focus{border-color:var(--orange);}
@@ -209,7 +209,7 @@ section{padding:5rem 2rem;}
 .btn-clear-sm:hover{border-color:var(--orange);color:var(--orange);}
 
 /* MOBILE CHAT */
-.chat-mobile-bar{display:none;background:var(--cream);border-bottom:1px solid var(--border);padding:.5rem .75rem;gap:.5rem;align-items:center;flex-wrap:wrap;}
+.chat-mobile-bar{display:none;background:var(--cream);border-bottom:1px solid var(--border);padding:.5rem .75rem;gap:.5rem;align-items:center;flex-wrap:wrap;flex-shrink:0;}
 .chat-mobile-btn{background:#fff;border:1px solid var(--border);border-radius:20px;padding:.35rem .85rem;font-size:.75rem;font-weight:600;color:var(--dark);cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:.35rem;transition:all .15s;white-space:nowrap;}
 .chat-mobile-btn:hover,.chat-mobile-btn.active{background:var(--dark);color:#fff;border-color:var(--dark)}
 .mobile-drawer{display:none;background:var(--cream);border-top:1px solid var(--border);padding:.85rem 1rem;flex-direction:column;gap:.65rem;animation:slideDown .2s ease;}
@@ -242,12 +242,37 @@ footer a{color:var(--amber);text-decoration:none;}
   .diag-grid{grid-template-columns:1fr 1fr}
   .steps{grid-template-columns:1fr 1fr}.steps::before{display:none}
   .modos-grid{grid-template-columns:1fr 1fr}
-  .chat-app{grid-template-columns:1fr;height:auto;min-height:560px;border-radius:14px 14px 0 0;}
+  .chat-app{
+    grid-template-columns:1fr;
+    height:calc(100dvh - 62px);
+    min-height:0;
+    border-radius:0;
+    margin-top:1rem;
+    position:sticky;
+    top:62px;
+    z-index:10;
+  }
   .chat-sidebar{display:none!important}
-  .chat-main{height:auto;min-height:560px;border-radius:14px 14px 0 0;}
-  .messages{height:320px;flex:none;}
+  .chat-main{
+    height:100%;
+    min-height:0;
+    border-radius:0;
+    display:flex;
+    flex-direction:column;
+  }
+  .messages{
+    flex:1;
+    height:0;
+    min-height:0;
+    overflow-y:auto;
+  }
   .chat-mobile-bar{display:flex!important}
   .realizacoes{grid-template-columns:1fr 1fr}
+  #ferramenta{padding:0;}
+  #ferramenta .container{padding:0;max-width:100%;}
+  #ferramenta .section-label,
+  #ferramenta .section-title,
+  #ferramenta .section-sub{display:none;}
 }
 @media(min-width:901px){.chat-mobile-bar{display:none!important}.mobile-drawer{display:none!important}}
 @media(max-width:600px){
@@ -469,10 +494,13 @@ footer a{color:var(--amber);text-decoration:none;}
       </div>
       <div class="sobre-text">
         <h2>Mais de 20 anos construindo operações de classe mundial — agora a serviço do empreendedor de delivery.</h2>
-        <p>Helder Nascimento Leite é engenheiro industrial, executivo C-Level e empreendedor com trajetória construída em algumas das maiores multinacionais do mundo. Ao longo de duas décadas, liderou operações complexas, projetos de expansão, reestruturações organizacionais e programas globais de melhoria contínua.</p>
-        <p>Em 2008, iniciou sua jornada empreendedora sem abandonar a excelência corporativa. Essa combinação — o rigor do executivo com a ousadia do empreendedor — gerou uma visão única sobre o mercado brasileiro de delivery e alimentação fora do lar.</p>
-        <p>Dessa visão nasceu o <strong>Cozinhas na Nuvem</strong>, o primeiro condomínio de dark kitchens da Região Norte do Brasil, referência nacional no modelo que combina infraestrutura compartilhada de alto padrão, eficiência operacional e inteligência imobiliária — reduzindo barreiras de entrada e acelerando a expansão de operações gastronômicas.</p>
-        <blockquote>"Empreender é transformar visão em realidade. Grandes negócios nascem quando propósito, estratégia e execução caminham juntos."</blockquote>
+        <p>Helder Nascimento Leite é engenheiro industrial, executivo C-Level e empreendedor com trajetória profissional marcada pela combinação entre visão estratégica, excelência operacional e forte capacidade de execução. Com mais de duas décadas de experiência em gestão industrial, engenharia, manufatura, operações e liderança organizacional, atuou em algumas das maiores empresas nacionais e multinacionais do mundo.</p>
+        <p>Ao longo de sua carreira corporativa, liderou operações complexas, unidades industriais, centros de distribuição, projetos de expansão, reestruturações organizacionais, processos de fusão empresarial, programas globais de melhoria contínua e iniciativas de redução de custos e aumento de produtividade. Sua atuação sempre esteve associada à construção de ambientes de alta performance, desenvolvimento de equipes multidisciplinares e implementação de metodologias de classe mundial — especialmente <strong>Lean Manufacturing, Gestão de Projetos e Excelência Operacional</strong>.</p>
+        <p>Sua formação acadêmica reúne sólida base técnica e gerencial, com graduação em Engenharia Industrial, complementação acadêmica nos Estados Unidos e diversas especializações e MBAs em áreas como Gestão de Projetos, Gestão de Pessoas, Engenharia de Produção com ênfase em Lean Manufacturing e Liderança Organizacional. Possui fluência em inglês e espanhol, além de experiência internacional em países como Estados Unidos, México, Polônia, República Tcheca, Áustria, Inglaterra, França e Alemanha.</p>
+        <p>Paralelamente à carreira executiva, desde 2008 desenvolve uma intensa jornada empreendedora — conciliando posições de liderança em grandes organizações com a criação e gestão de empresas próprias. Essa experiência lhe proporcionou uma visão rara de mercado: a capacidade de enxergar os desafios tanto pelo olhar do executivo corporativo quanto pelo olhar do empreendedor que assume riscos, investe capital próprio e constrói negócios do zero.</p>
+        <p>Como empreendedor, fundou e lidera empresas nos segmentos de engenharia, construção civil, gestão imobiliária, serviços e negócios voltados ao food service. É fundador do <strong>Grupo HNL</strong> e do <strong>Cozinhas na Nuvem</strong> — o primeiro condomínio de dark kitchens da Região Norte do Brasil, referência nacional no modelo que combina infraestrutura compartilhada de alto padrão, eficiência operacional e inteligência imobiliária, contribuindo para a profissionalização e expansão do ecossistema de delivery na região amazônica.</p>
+        <p>Reconhecido por seu perfil hands-on, Helder combina forte capacidade analítica e técnica com criatividade, adaptabilidade e visão de longo prazo. Transita com naturalidade entre o ambiente estratégico da alta gestão e a realidade operacional das empresas. Mais do que construir empresas, acredita em construir pessoas, desenvolver líderes e criar negócios que gerem impacto econômico, social e oportunidades para as próximas gerações.</p>
+        <blockquote>"Grandes resultados nascem quando estratégia, execução e propósito caminham juntos."</blockquote>
         <div class="realizacoes">
           <div class="real-item"><div class="real-num">20+</div><div class="real-desc">anos de experiência em gestão, engenharia e operações</div></div>
           <div class="real-item"><div class="real-num">1°</div><div class="real-desc">dark kitchen da Região Norte do Brasil</div></div>
